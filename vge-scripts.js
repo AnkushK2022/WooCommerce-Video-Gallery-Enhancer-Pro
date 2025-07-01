@@ -10,20 +10,20 @@ jQuery(document).ready(function($) {
         });
     }
 
-    // FlexSlider refresh with fallback
+    // FlexSlider safe refresh
     function refreshFlexSlider() {
         var $gallery = $('.woocommerce-product-gallery');
+
         if ($gallery.length) {
             var flexslider = $gallery.data('flexslider');
-            if (flexslider) {
+
+            if (flexslider && typeof flexslider.resize === 'function') {
                 flexslider.resize();
-                flexslider._setControlNav();
-                flexslider._directionNav();
             }
         }
     }
 
-    // Wait for images to load
+    // Refresh FlexSlider when WooCommerce gallery zoom is ready or on load
     $('body').on('woocommerce_gallery_init_zoom', refreshFlexSlider);
     $(window).on('load', refreshFlexSlider);
 });
